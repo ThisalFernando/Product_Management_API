@@ -117,7 +117,7 @@ Example:
   {
     "name": "Chocolate Biscuits",
     "price": 500,
-    "quantity": "50"
+    "quantity": 50
   }
 ```
 
@@ -150,7 +150,7 @@ Example:
   {
     "name": "Chocolate Cream Biscuits",
     "price": 600,
-    "quantity": "70"
+    "quantity": 70
   }
 ```
 
