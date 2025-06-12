@@ -68,6 +68,16 @@ The API will display the following message and run the API on http://localhost:5
 | `password` | `string` | **Required**. User's password |
 | `role` | `string` | admin / user |
 
+Example:
+
+```bash
+  {
+    "name": "User001",
+    "email": "user001@gmail.com",
+    "password": "user@001"
+  }
+```
+
 - User Login
 
 ```http
@@ -78,6 +88,15 @@ The API will display the following message and run the API on http://localhost:5
 | :-------- | :------- | :------------------------- |
 | `email` | `string` | **Required**. Login email |
 | `password` | `string` | **Required**. Login password |
+
+Example:
+
+```bash
+  {
+    "email": "user001@gmail.com",
+    "password": "user@001"
+  }
+```
 
 ### Product Management:
 
@@ -91,6 +110,16 @@ The API will display the following message and run the API on http://localhost:5
 | `name` | `string` | **Required**. Product Name |
 | `price` | `number` | **Required**. Product Price |
 | `quantity` | `number` | **Required**. Product quantity |
+
+Example:
+
+```bash
+  {
+    "name": "Chocolate Biscuits",
+    "price": 500,
+    "quantity": "50"
+  }
+```
 
 - Display products
 
@@ -114,6 +143,16 @@ The API will display the following message and run the API on http://localhost:5
 | `name` | `string` | **Required**. Product Name |
 | `price` | `number` | **Required**. Product Price |
 | `quantity` | `number` | **Required**. Product quantity |
+
+Example:
+
+```bash
+  {
+    "name": "Chocolate Cream Biscuits",
+    "price": 600,
+    "quantity": "70"
+  }
+```
 
 - Delete product by id
 
