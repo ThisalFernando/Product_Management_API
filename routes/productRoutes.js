@@ -1,16 +1,14 @@
 const express = require("express");
 const Product = require("../models/Product");
-const auth = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 // Set product
-router.post("/", auth(), async(req, res) => {
+router.post("/", async(req, res) => {
     try{
         const {name, price, quantity} = req.body;
 
         const product = new Product({
-            user: req.user.id,
             name,
             price,
             quantity
@@ -25,9 +23,9 @@ router.post("/", auth(), async(req, res) => {
 });
 
 // Get all products for a user
-router.get("/", auth(), async(req, res) => {
+router.get("/", async(req, res) => {
     try{
-        const products = await Product.find({user: req.user.id});
+        const products = await Product.find();
         res.json(products);
     }catch(error){
         console.error("Error fetching products: ", error);
@@ -36,9 +34,9 @@ router.get("/", auth(), async(req, res) => {
 });
 
 // Get a single product by ID
-router.get("/:id", auth(), async (req, res) => {
+router.get("/:id", async (req, res) => {
     try{
-        const product = await Product.findOne({_id: req.params.id, user: req.user.id});
+        const product = await Product.findById(req.params.id);
         if(!product){
             return res.status(404).json({message: "Product not found"});
         }
@@ -50,18 +48,18 @@ router.get("/:id", auth(), async (req, res) => {
 });
 
 //Update a product by ID
-router.put("/:id", auth(), async (req, res) => {
+router.put("/:id", async (req, res) => {
     try{
         const { name, price, quantity } = req.body;
 
-        const product = await Product.findOneAndUpdate(
-            { _id: req.params.id, user: req.user.id },
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
             { name, price, quantity },
             { new: true, runValidators: true }
         );
 
         if(!product){
-            return res.status(404).json({message: "Product not found or not authorized!"});
+            return res.status(404).json({message: "Product not found!"});
         }
 
         res.json(product);
@@ -72,13 +70,16 @@ router.put("/:id", auth(), async (req, res) => {
 });
 
 // Delete a product
-router.delete("/:id", auth(), async(req, res) => {
-    try{
-        await Product.findOneAndDelete({_id: req.params.id, user: req.user.id});
-        res.json({message: "Product deleted successfully!"});
-    }catch(error){
-        console.error("Error deleting product: ", error);
-        res.status(500).json({error: "Failed to delete product!"});
+router.delete("/:id", async (req, res) => {
+    try {
+        const product = await Product.findByIdAndDelete(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found!" });
+        }
+        res.json({ message: "Product deleted successfully!" });
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        res.status(500).json({ error: "Failed to delete product!" });
     }
 });
 

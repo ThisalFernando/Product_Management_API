@@ -1,7 +1,7 @@
 
 # Personal Finance Tracker API
 
-This is RESTful API for managing product details according to the authenticated user.
+This is RESTful API for managing product details with user registration and login features.
 
 
 
